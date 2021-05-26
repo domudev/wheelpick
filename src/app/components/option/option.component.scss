@@ -1,0 +1,107 @@
+@import "~src/variables.scss";
+
+.options-header {
+  margin: 20px 0 10px 0;
+  background: $primary-color;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  .options-counter {
+    padding: 10px;
+    background: $accent-color;
+    color: #fff;
+    border-radius: 8px;
+  }
+  .options-title {
+    font-size: 1.4em;
+  }
+}
+
+.options-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background: #f2f2f2;
+  .option {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 900;
+    font-size: larger;
+    height: 25px;
+    background: lighten($primary-color, 10%);
+    .option-color {
+      cursor: pointer;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: none;
+      padding: 0;
+      &:hover {
+        width: 19px;
+        height: 19px;
+        border: 3px solid #fff;
+      }
+    }
+  }
+}
+
+.remove-option,
+.add-option,
+.option-btn {
+  border-radius: 5px;
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+}
+.option-btn {
+  padding: 8px 12px;
+  background: $accent-color;
+}
+.option-input {
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  width: 152.25px;
+}
+.option-checkbox {
+  position: relative;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  margin: 0;
+  background: $accent-color;
+  appearance: unset;
+  &:checked {
+    &:before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 10px;
+      height: 10px;
+      border-radius: 5px;
+      background: #fff;
+    }
+  }
+}
+.add-option {
+  background: $accent-color;
+}
+.remove-option {
+  background: $warn-color;
+}

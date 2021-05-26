@@ -1,0 +1,29 @@
+<div class="options-header" fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="15px">
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <span class="options-counter">{{ (optionService.options$ | async)?.length }}</span>
+    <span class="options-title">Options</span>
+  </div>
+  <button class="option-btn" (click)="viewAllOptions()" *ngIf="optionService.hasInvisible()">
+    Restart
+  </button>
+  <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+    <label>Remove Option after Spin</label>
+    <input class="option-checkbox" type="checkbox" [(ngModel)]="optionService.removeOptions" />
+  </div>
+</div>
+
+<div class="options-container">
+
+  <div class="option" *ngFor="let option of optionService.options$ | async">
+    <input #colorPickerInput [ngStyle]="{'background': option.color}" class="option-color"
+      [(colorPicker)]="option.color" (colorPickerSelect)="optionChanged()">
+    <input class="option-input" [(ngModel)]="option.name" (change)="optionChanged()">
+    <button class="remove-option material-icons" (click)="optionService.removeOption(option)">close</button>
+  </div>
+
+  <form class="option" (submit)="$event.preventDefault(); addOption(addOptionInput.value); addOptionInput.value=''">
+    <input #addOptionInput class="option-input">
+    <button type="submit" class="add-option material-icons" [disabled]="!addOptionInput.value">add</button>
+  </form>
+</div>
+

@@ -1,0 +1,28 @@
+@import "../variables.scss";
+
+.main-wrapper {
+  height: 100%;
+}
+.main-title {
+  background: $primary-color;
+  color: #fff;
+  font-weight: 300;
+  font-size: 1.6em;
+  width: 100%;
+  .main-icon {
+    height: 60px;
+  }
+  .repo-link {
+    height: 26px;
+    width: 26px;
+    border-radius: 13px;
+    background: transparent;
+    transition: all ease 0.25s;
+    &:hover {
+      background: $accent-color;
+    }
+    img {
+      height: 100%;
+    }
+  }
+}

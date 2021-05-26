@@ -1,0 +1,16 @@
+
+<div class="wheel-container" [fxShow]="options?.length">
+  <div id="wheel">
+    <canvas id="wheel-canvas" #spinningWheel [width]="wheelWidth > 600 ? 600 : wheelWidth"
+      [height]="wheelWidth > 600 ? 600 : wheelWidth"></canvas>
+    <div id="spin" #spinButton (click)="spinWheel()"
+      [ngStyle]="{'background': currentOption?.color, 'color': getContrast(currentOption?.color)}"></div>
+  </div>
+
+  <div *ngIf="currentOption && wheelSpun" class="the-chosen-one-container">
+    <div class="the-chosen-one" [ngStyle]="{'background': currentOption.color, 'color': getContrast(currentOption.color)}">
+      {{ currentOption.name }}
+    </div>
+    <canvas #confettiCanvas class="confetti-canvas"></canvas>
+  </div>
+</div>
