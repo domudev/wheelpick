@@ -21,7 +21,7 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
   @ViewChild('spinButton') spinButton!: ElementRef;
   @ViewChild('confettiCanvas') confettiCanvas!: ElementRef;
 
-  public wheelStrength = 0.4;
+  public wheelStrength = 0.5;
   public currentOption?: Option;
   public wheelSpun = false;
   public wheelWidth: number = window.innerWidth - 40;
@@ -181,8 +181,8 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
       }
       this.currentOption = undefined;
       this.angleVelocity = this.randomVelocity(
-        this.wheelStrength,
-        this.wheelStrength + 0.1
+        this.wheelStrength - 0.2,
+        this.wheelStrength + 0.2
       );
       this.wheelSpun = true;
     }
