@@ -1,29 +1,37 @@
-<div class="options-header" fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="15px">
-  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
-    <span class="options-counter">{{ (optionService.options$ | async)?.length }}</span>
+<div class="flex flex-row rounded justify-between mb-4 bg-accent-400 p-4 text-white shadow">
+  <div class="flex flex-row justify-center items-center gap-2">
+    <span class="rounded px-2 font-bold h-6 bg-accent-700">{{ (optionService.options$ | async)?.length }}</span>
     <span class="options-title">Options</span>
   </div>
   <button class="option-btn" (click)="viewAllOptions()" *ngIf="optionService.hasInvisible()">
     Restart
   </button>
-  <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+  <div class="flex flex row justify-center items-center gap-2">
     <label>Remove Option after Spin</label>
-    <input class="option-checkbox" type="checkbox" [(ngModel)]="optionService.removeOptions" />
+    <input class="w-6 h-6 rounded appearance-none bg-accent-700 checked:bg-primary-200 checked:border-transparent cursor-pointer" type="checkbox"
+           [(ngModel)]="optionService.removeOptions" />
   </div>
 </div>
 
-<div class="options-container">
+<div class="flex flex-wrap flex-row gap-4 justify-center bg-gray-50 rounded p-4 shadow">
 
-  <div class="option" *ngFor="let option of optionService.options$ | async">
-    <input #colorPickerInput [ngStyle]="{'background': option.color}" class="option-color"
+  <div class="flex flex-row items-center bg-gray-100 p-3 rounded shadow" *ngFor="let option of optionService.options$ | async">
+    <input #colorPickerInput [style.backgroundColor]="option.color" class="rounded w-6 h-6 cursor-pointer m-0 p-0 transition-all opacity-90 hover:opacity-100"
       [(colorPicker)]="option.color" (colorPickerSelect)="optionChanged()">
-    <input class="option-input" [(ngModel)]="option.name" (change)="optionChanged()">
-    <button class="remove-option material-icons" (click)="optionService.removeOption(option)">close</button>
+    <div class="relative rounded h-8 shadow mx-2">
+      <input class="h-full px-3 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
+             [(ngModel)]="option.name" (change)="optionChanged()">
+    </div>
+    <button class="bg-warn rounded text-white material-icons w-6 h-6 transition-opacity opacity-90 hover:opacity-100" (click)="optionService.removeOption(option)">close</button>
   </div>
 
-  <form class="option" (submit)="$event.preventDefault(); addOption(addOptionInput.value); addOptionInput.value=''">
-    <input #addOptionInput class="option-input">
-    <button type="submit" class="add-option material-icons" [disabled]="!addOptionInput.value">add</button>
+  <form class="flex flex-row items-center gap-2 bg-gray-200 p-3 rounded shadow"
+        (submit)="$event.preventDefault(); addOption(addOptionInput.value); addOptionInput.value=''">
+    <div class="relative rounded h-8 shadow">
+      <input #addOptionInput class="bg-gray-100 h-full px-3 block sm:text-sm rounded-md"
+      placeholder="New Option">
+    </div>
+    <button type="submit" class="bg-accent-200 rounded text-white material-icons w-6 h-6 transition-opacity opacity-90 hover:opacity-100" [disabled]="!addOptionInput.value">add</button>
   </form>
 </div>
 

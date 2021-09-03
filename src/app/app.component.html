@@ -1,18 +1,16 @@
-<div class="main-wrapper" fxLayout="column" fxLayoutAlign="stretch">
-  <div class="main-title">
-    <div class="container" fxLayout="row" fxLayoutAlign="flex-start center" fxLayoutGap="10px">
-      <img src="assets/wheelpick-icon.svg" class="main-icon">
-      <span>{{ title }}</span>
-      <span fxFlex="1 1 auto"></span>
-      <a [href]="repoLink" class="repo-link" target="_blank" rel="noopener noreferrer">
-        <img src="assets/img/GitHub-Mark-Light-64px.png">
-      </a>
-    </div>
+
+<div class="bg-primary-500 w-screen py-5">
+  <div class="container mx-auto flex flex-row gap-10 items-center text-white">
+    <img src="assets/wheelpick-icon.svg" class="w-20 h-20">
+    <span class="font-thin text-3xl">{{ title }}</span>
+    <span class="flex-1"></span>
+    <a [href]="repoLink" class="w-8 h-8 hover:bg-accent-500 transition-colors rounded-full" target="_blank" rel="noopener noreferrer">
+      <img src="assets/img/GitHub-Mark-Light-64px.png">
+    </a>
   </div>
-  <div class="container">
-    <app-wheel></app-wheel>
-    <app-option></app-option>
-  </div>
-  <span fxFlex="1 1 auto"></span>
+</div>
+<div class="container mx-auto">
+  <app-wheel></app-wheel>
+  <app-option></app-option>
   <app-footer></app-footer>
 </div>
