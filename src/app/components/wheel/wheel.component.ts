@@ -154,7 +154,7 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
         }
         this.angleVelocity *= this.friction; // Decrement velocity by friction
         if (this.angleVelocity < 0.002) {
-          this.angleVelocity = 0;  // Bring to stop
+          this.angleVelocity = 0; // Bring to stop
         }
         this.angle += this.angleVelocity; // Update angle
         this.angle %= this.tau; // Normalize angle

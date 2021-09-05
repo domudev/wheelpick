@@ -1,4 +1,4 @@
-@import "~src/variables.scss";
+@import '~src/variables.scss';
 
 .the-chosen-one-container {
   top: 0;
@@ -64,7 +64,7 @@
   }
 
   #spin::after {
-    content: "";
+    content: '';
     position: absolute;
     top: -24px;
     border: 20px solid transparent;
