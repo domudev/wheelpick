@@ -37,7 +37,22 @@
   <div class="flex flex row justify-center items-center gap-2">
     <label>Remove Option after Spin</label>
     <input
-      class="w-6 h-6 cursor-pointer rounded"
+      class="
+        border-0
+        w-6
+        h-6
+        transition-opacity
+        opacity-90
+        cursor-pointer
+        rounded
+        bg-gradient-to-br
+        from-emerald-400
+        to-emerald-600
+        appearance-none
+        text-emerald-600
+        focus:outline-none focus:ring-offset-0 focus:ring-0
+        hover:opacity-100
+      "
       type="checkbox"
       [(ngModel)]="optionService.removeOptions"
     />
