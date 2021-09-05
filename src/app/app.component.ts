@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
+import { ThemeService } from './services/theme.service';
+import { ThemeModeEnum } from './shared/enum/theme-mode.enum';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +9,9 @@ import { environment } from '../environments/environment';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  themeModeEnum = ThemeModeEnum;
+
+  constructor(public readonly themeService: ThemeService) {}
 
   title = environment.title;
   repoLink = environment.repoLink;

@@ -1,4 +1,4 @@
-export enum StorageMode {
+export enum StorageModeEnum {
   URL,
   STORAGE,
 }
