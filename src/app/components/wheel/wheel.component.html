@@ -1,16 +1,105 @@
-
-<div class="wheel-container" [fxShow]="options?.length">
-  <div id="wheel">
-    <canvas id="wheel-canvas" #spinningWheel [width]="wheelWidth > 600 ? 600 : wheelWidth"
-      [height]="wheelWidth > 600 ? 600 : wheelWidth"></canvas>
-    <div id="spin" #spinButton (click)="spinWheel()"
-      [ngStyle]="{'background': currentOption?.color, 'color': getContrast(currentOption?.color)}"></div>
+<div
+  class="container mx-auto flex flex-row justify-center relative"
+  [fxShow]="options?.length"
+>
+  <div class="inline-block relative overflow-hidden my-5">
+    <canvas
+      class="block"
+      #spinningWheel
+      [width]="wheelWidth > 600 ? 600 : wheelWidth"
+      [height]="wheelWidth > 600 ? 600 : wheelWidth"
+    ></canvas>
+    <div
+      class="
+        -m-20
+        w-40
+        h-40
+        shadow-lg
+        text-xl
+        font-bold
+        rounded-full
+        bg-gradient-to-br
+        from-emerald-400
+        to-emerald-600
+        border-4 border-white
+        absolute
+        cursor-pointer
+        select-none
+        flex
+        justify-center
+        items-center
+        top-1/2
+        left-1/2
+        dark:from-amber-500 dark:to-amber-600 dark:border-blueGray-900
+      "
+      #spinButton
+      (click)="spinWheel()"
+      [ngStyle]="{
+        background: currentOption?.color,
+        color: getContrast(currentOption?.color)
+      }"
+    >
+      <span>
+        <span *ngIf="currentOption; else noOption">{{
+          currentOption.name
+        }}</span>
+        <ng-template #noOption>
+          <span *ngIf="wheelSpun; else wheelReady">...</span>
+        </ng-template>
+        <ng-template #wheelReady>
+          <span>GO</span>
+        </ng-template>
+      </span>
+      <icon-chevron
+        class="
+          absolute
+          top-0
+          h-12
+          absolute
+          -top-11
+          w-12
+          text-white
+          dark:text-blueGray-900
+        "
+      ></icon-chevron>
+    </div>
   </div>
 
-  <div *ngIf="currentOption && wheelSpun" class="the-chosen-one-container">
-    <div class="the-chosen-one" [ngStyle]="{'background': currentOption.color, 'color': getContrast(currentOption.color)}">
+  <!-- Selected Option Container -->
+  <div
+    *ngIf="currentOption && wheelSpun"
+    class="
+      absolute
+      top-0
+      left-0
+      flex flex-row
+      justify-end
+      items-end
+      w-full
+      h-full
+      pointer-events-none
+    "
+  >
+    <div
+      class="
+        rounded-xl
+        p-2
+        mb-4
+        border-8 border-white border-opacity-50
+        dark:border-black dark:border-opacity-50
+        font-bold
+        text-2xl
+      "
+      [ngStyle]="{
+        background: currentOption.color,
+        color: getContrast(currentOption.color)
+      }"
+    >
       {{ currentOption.name }}
     </div>
-    <canvas #confettiCanvas class="confetti-canvas"></canvas>
+    <canvas
+      #confettiCanvas
+      class="absolute top-0 left-0 w-full h-full"
+    ></canvas>
   </div>
 </div>

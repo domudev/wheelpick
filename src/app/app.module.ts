@@ -9,6 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { IconsModule } from './icons/icons.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
       { path: '', component: AppComponent },
       { path: '**', redirectTo: '', pathMatch: 'full' },
     ]),
+    IconsModule,
     FlexLayoutModule,
     ColorPickerModule,
   ],
