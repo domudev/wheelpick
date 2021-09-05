@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
-import { StorageMode } from '../shared/enum/storage-mode.enum';
+import { StorageModeEnum } from '../shared/enum/storage-mode.enum';
 import { Option } from '../shared/interface/option';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OptionService {
-  get storageMode(): StorageMode {
+  get storageMode(): StorageModeEnum {
     return this._storageMode;
   }
-  set storageMode(mode: StorageMode) {
+  set storageMode(mode: StorageModeEnum) {
     this._storageMode = mode;
-    this._storageMode === StorageMode.URL
+    this._storageMode === StorageModeEnum.URL
       ? this.readQueryParams()
       : this.readStorage();
   }
@@ -28,14 +28,14 @@ export class OptionService {
   }
 
   private maxOptions = 20;
-  private _storageMode = StorageMode.URL; // where to store the options
+  private _storageMode = StorageModeEnum.URL; // where to store the options
   private _removeOptions = false; // whether options shall be removed from wheel after selection
 
   constructor(
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute
   ) {
-    this._storageMode === StorageMode.URL
+    this._storageMode === StorageModeEnum.URL
       ? this.readQueryParams()
       : this.readStorage();
   }
@@ -48,6 +48,7 @@ export class OptionService {
       this.options.push(option);
       await this.storeOptions();
     } else {
+      // TODO: Add some notification for the user
       console.warn(`Max Options: ${this.maxOptions}`);
       this.options$.next(this.options);
     }
@@ -89,7 +90,7 @@ export class OptionService {
   }
 
   async storeOptions(): Promise<void> {
-    if (this._storageMode === StorageMode.URL) {
+    if (this._storageMode === StorageModeEnum.URL) {
       await this.router.navigate([], {
         relativeTo: this.activatedRoute,
         queryParams: { options: JSON.stringify(this.options) },
@@ -105,7 +106,7 @@ export class OptionService {
   }
 
   private async storeSettings(): Promise<void> {
-    if (this._storageMode === StorageMode.URL) {
+    if (this._storageMode === StorageModeEnum.URL) {
       await this.router.navigate([], {
         relativeTo: this.activatedRoute,
         queryParams: {

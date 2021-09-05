@@ -1,8 +1,20 @@
-<div class="bg-blueGray-900 text-white fixed bottom-0 left-0 w-full h-16">
+<div
+  class="
+    bg-blueGray-200
+    dark:bg-blueGray-900
+    text-black
+    dark:text-white
+    fixed
+    bottom-0
+    left-0
+    w-full
+    h-16
+  "
+>
   <div
     class="
       flex flex-row
-      justify-end
+      justify-around
       items-center
       container
       mx-auto
@@ -27,6 +39,7 @@
           rounded
           transition-colors
           ml-1
+          dark:from-amber-400 dark:to-amber-600
         "
         [href]="madeByLink"
         target="_blank"

@@ -1,29 +1,96 @@
-<div class="bg-gradient-to-b from-blueGray-900 to-cyan-900 w-screen p-5">
+<div class="h-screen w-screen bg-white dark:bg-blueGray-900">
   <div
-    class="container mx-auto flex flex-row gap-10 items-center text-white mb-5"
+    class="
+      bg-gradient-to-b
+      from-blueGray-500
+      to-cyan-400
+      w-screen
+      p-5
+      dark:from-blueGray-800 dark:to-blueGray-800
+    "
   >
-    <img src="assets/wheelpick-icon.svg" class="w-16 h-16" />
-    <span class="font-semibold rounded px-4 py-2 text-3xl">
-      {{ title }}
-    </span>
-    <span class="flex-1"></span>
-    <a
-      [href]="repoLink"
-      class="w-10 h-10 hover:bg-green-500 transition-colors rounded-full p-2"
-      target="_blank"
-      rel="noopener noreferrer"
+    <div
+      class="container mx-auto flex flex-row gap-5 items-center text-white mb-5"
     >
-      <img src="assets/img/GitHub-Mark-Light-64px.png" />
-    </a>
+      <img src="assets/wheelpick-icon.svg" class="w-16 h-16" />
+      <span class="font-semibold rounded px-4 py-2 text-3xl">
+        {{ title }}
+      </span>
+      <span class="flex-1"></span>
+      <div class="flex flex-row gap-2 items-center">
+        <icon-sun class="w-6 h-6"></icon-sun>
+        <label for="themeToggle" class="cursor-pointer flex flex-row">
+          <!-- toggle -->
+          <div class="relative">
+            <!-- input -->
+            <input
+              #themeToggle
+              id="themeToggle"
+              type="checkbox"
+              class="sr-only"
+              [checked]="(themeService.theme$ | async) === themeModeEnum.DARK"
+              (change)="
+                themeService.changeTheme(
+                  themeToggle.checked ? themeModeEnum.DARK : themeModeEnum.LIGHT
+                )
+              "
+            />
+            <!-- line -->
+            <div
+              class="
+                block
+                bg-blueGray-400
+                dark:bg-amber-500
+                w-14
+                h-8
+                rounded-full
+                transition-colors
+              "
+            ></div>
+            <!-- dot -->
+            <div
+              class="
+                dot
+                absolute
+                left-1
+                top-1
+                bg-white
+                w-6
+                h-6
+                rounded-full
+                transition-color transition-transform
+              "
+            ></div>
+          </div>
+        </label>
+        <icon-moon class="w-6 h-6"></icon-moon>
+      </div>
+      <a
+        [href]="repoLink"
+        class="
+          w-10
+          h-10
+          hover:bg-emerald-500
+          dark:hover:bg-amber-500
+          transition-colors
+          rounded-full
+          p-2
+        "
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img src="assets/img/GitHub-Mark-Light-64px.png" />
+      </a>
+    </div>
+    <div class="container mx-auto pt-2">
+      <app-option></app-option>
+    </div>
   </div>
-  <div class="container mx-auto pt-2">
-    <app-option></app-option>
+  <div class="container p-5 mx-auto">
+    <app-wheel></app-wheel>
   </div>
-</div>
-<div class="container p-5 mx-auto">
-  <app-wheel></app-wheel>
-</div>
 
-<!-- filler el for footer -->
-<div class="h-16"></div>
-<app-footer></app-footer>
+  <!-- filler element for footer -->
+  <div class="h-16"></div>
+  <app-footer></app-footer>
+</div>
