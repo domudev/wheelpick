@@ -2,24 +2,58 @@
   class="container mx-auto flex flex-row justify-center relative"
   [fxShow]="options?.length"
 >
-  <div id="wheel" class="my-5">
+  <div class="inline-block relative overflow-hidden my-5">
     <canvas
-      id="wheel-canvas"
+      class="block"
       #spinningWheel
       [width]="wheelWidth > 600 ? 600 : wheelWidth"
       [height]="wheelWidth > 600 ? 600 : wheelWidth"
     ></canvas>
     <div
-      id="spin"
+      class="
+        -m-20
+        w-40
+        h-40
+        shadow-lg
+        text-xl
+        font-bold
+        rounded-full
+        bg-primary-700
+        border-4 border-white
+        absolute
+        cursor-pointer
+        select-none
+        flex
+        justify-center
+        items-center
+        top-1/2
+        left-1/2
+      "
       #spinButton
       (click)="spinWheel()"
       [ngStyle]="{
         background: currentOption?.color,
         color: getContrast(currentOption?.color)
       }"
-    ></div>
+    >
+      <span>
+        <span *ngIf="currentOption; else noOption">{{
+          currentOption.name
+        }}</span>
+        <ng-template #noOption>
+          <span *ngIf="wheelSpun; else wheelReady">...</span>
+        </ng-template>
+        <ng-template #wheelReady>
+          <span>GO</span>
+        </ng-template>
+      </span>
+      <icon-chevron
+        class="absolute top-0 h-12 absolute -top-11 w-12 text-white"
+      ></icon-chevron>
+    </div>
   </div>
 
+  <!-- Selected Option Container -->
   <div
     *ngIf="currentOption && wheelSpun"
     class="
@@ -31,10 +65,18 @@
       items-end
       w-full
       h-full
+      pointer-events-none
     "
   >
     <div
-      class="the-chosen-one"
+      class="
+        rounded
+        p-2
+        mb-4
+        border-8 border-white border-opacity-50
+        font-bold
+        text-2xl
+      "
       [ngStyle]="{
         background: currentOption.color,
         color: getContrast(currentOption.color)
@@ -42,6 +84,9 @@
     >
       {{ currentOption.name }}
     </div>
-    <canvas #confettiCanvas class="confetti-canvas"></canvas>
+    <canvas
+      #confettiCanvas
+      class="absolute top-0 left-0 w-full h-full"
+    ></canvas>
   </div>
 </div>

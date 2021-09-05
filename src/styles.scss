@@ -3,6 +3,12 @@
 @import 'tailwindcss/utilities';
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;900&display=swap');
+
+@font-face {
+  font-family: 'NunitoSans';
+  src: url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;900&display=swap');
+}
 
 body {
   margin: 0;

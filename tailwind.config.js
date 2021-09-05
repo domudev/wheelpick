@@ -36,6 +36,9 @@ module.exports = {
       },
       warn: '#E76F51',
     }),
+    fontFamily: {
+      sans: ['Nunito Sans', 'sans-serif'],
+    },
   },
   variants: {
     extend: {

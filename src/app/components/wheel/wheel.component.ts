@@ -21,7 +21,7 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
   @ViewChild('spinButton') spinButton!: ElementRef;
   @ViewChild('confettiCanvas') confettiCanvas!: ElementRef;
 
-  public wheelStrength = 0.4;
+  public wheelStrength = 0.5;
   public currentOption?: Option;
   public wheelSpun = false;
   public wheelWidth: number = window.innerWidth - 40;
@@ -38,7 +38,7 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
   private rad = 0;
   private tau = 0;
   private arc = 0;
-  private friction = 0.96; // 0.995=soft, 0.99=mid, 0.98=hard;
+  private friction = 0.98; // 0.995=soft, 0.99=mid, 0.98=hard;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
@@ -94,26 +94,58 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
         // option part color
         this.ctx.beginPath();
         this.ctx.fillStyle = option.color;
-        this.ctx.lineWidth = 10;
-        this.ctx.strokeStyle = '#fff';
         this.ctx.moveTo(this.rad, this.rad);
         this.ctx.arc(this.rad, this.rad, this.rad, ang, ang + this.arc);
         this.ctx.lineTo(this.rad, this.rad);
-        this.ctx.stroke();
         this.ctx.fill();
 
         // text
         this.ctx.translate(this.rad, this.rad);
         this.ctx.rotate(ang + this.arc / 2);
-        this.ctx.font = '900 16px monospace';
+        this.ctx.font = '400 1.5em sans-serif';
         this.ctx.textAlign = 'right';
         this.ctx.fillStyle = this.getContrast(option.color);
         this.ctx.fillText(option.name, this.rad - 10, 10);
 
         this.ctx.restore();
       });
-      this.rotate();
+      this.rotateUpdate();
     }
+  }
+
+  async spinWheel(): Promise<void> {
+    if (!this.angleVelocity) {
+      // remove option before next turn
+      if (this.currentOption && this.opionService.removeOptions) {
+        await this.opionService.updateOption(this.currentOption.id, {
+          ...this.currentOption,
+          visible: false,
+        });
+        if (!this.options?.length) {
+          return;
+        }
+      }
+      this.currentOption = undefined;
+      this.angleVelocity = this.randomVelocity(
+        this.wheelStrength / 3,
+        this.wheelStrength * 3
+      );
+      this.wheelSpun = true;
+    }
+  }
+
+  getContrast(hexColor?: string): string {
+    if (hexColor) {
+      const rgb = this.hexToRgb(hexColor);
+      if (rgb) {
+        // http://www.w3.org/TR/AERT#color-contrast
+        const brightness = Math.round(
+          (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000
+        );
+        return brightness > 125 ? '#000' : '#fff';
+      }
+    }
+    return '#fff';
   }
 
   private getIndex(): number {
@@ -124,12 +156,10 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
     );
   }
 
-  private rotate(): void {
+  private rotateUpdate(): void {
     const option = this.options[this.getIndex()];
     this.ctx.canvas.style.transform = `rotate(${this.angle - Math.PI / 2}rad)`;
-    this.spinButton.nativeElement.textContent = this.angleVelocity
-      ? option.name
-      : 'GO';
+    this.drawMotionBlur(this.angleVelocity * 100);
     if (this.wheelSpun) {
       this.spinButton.nativeElement.style.background = option?.color;
       this.spinButton.nativeElement.style.color = this.getContrast(
@@ -140,6 +170,10 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
       this.currentOption = option;
       this.confettiExplosion();
     }
+  }
+
+  private drawMotionBlur(amount: number) {
+    this.ctx.filter = `blur(${Math.floor(amount)}px)`;
   }
 
   private randomVelocity(a: number, b: number): number {
@@ -158,34 +192,13 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
         }
         this.angle += this.angleVelocity; // Update angle
         this.angle %= this.tau; // Normalize angle
-        this.rotate();
+        this.rotateUpdate();
       };
       frame();
       requestAnimationFrame(engine);
     };
 
     engine();
-  }
-
-  async spinWheel(): Promise<void> {
-    if (!this.angleVelocity) {
-      // remove option before next turn
-      if (this.currentOption && this.opionService.removeOptions) {
-        await this.opionService.updateOption(this.currentOption.id, {
-          ...this.currentOption,
-          visible: false,
-        });
-        if (!this.options?.length) {
-          return;
-        }
-      }
-      this.currentOption = undefined;
-      this.angleVelocity = this.randomVelocity(
-        this.wheelStrength,
-        this.wheelStrength + 0.1
-      );
-      this.wheelSpun = true;
-    }
   }
 
   private confettiExplosion(): void {
@@ -211,19 +224,5 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
           b: parseInt(result[3], 16),
         }
       : null;
-  }
-
-  getContrast(hexColor?: string): string {
-    if (hexColor) {
-      const rgb = this.hexToRgb(hexColor);
-      if (rgb) {
-        // http://www.w3.org/TR/AERT#color-contrast
-        const brightness = Math.round(
-          (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000
-        );
-        return brightness > 125 ? '#000' : '#fff';
-      }
-    }
-    return '#fff';
   }
 }
