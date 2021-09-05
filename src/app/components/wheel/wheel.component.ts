@@ -159,7 +159,6 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
   private rotateUpdate(): void {
     const option = this.options[this.getIndex()];
     this.ctx.canvas.style.transform = `rotate(${this.angle - Math.PI / 2}rad)`;
-    this.drawMotionBlur(this.angleVelocity * 100);
     if (this.wheelSpun) {
       this.spinButton.nativeElement.style.background = option?.color;
       this.spinButton.nativeElement.style.color = this.getContrast(
@@ -170,10 +169,6 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
       this.currentOption = option;
       this.confettiExplosion();
     }
-  }
-
-  private drawMotionBlur(amount: number) {
-    this.ctx.filter = `blur(${Math.floor(amount)}px)`;
   }
 
   private randomVelocity(a: number, b: number): number {

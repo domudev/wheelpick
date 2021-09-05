@@ -1,5 +1,14 @@
-<div class="h-screen w-screen bg-white dark:bg-gray-900">
-  <div class="bg-gradient-to-b from-blueGray-900 to-cyan-900 w-screen p-5">
+<div class="h-screen w-screen bg-white dark:bg-blueGray-900">
+  <div
+    class="
+      bg-gradient-to-b
+      from-blueGray-500
+      to-cyan-400
+      w-screen
+      p-5
+      dark:from-blueGray-800 dark:to-blueGray-800
+    "
+  >
     <div
       class="
         container
@@ -35,7 +44,17 @@
               "
             />
             <!-- line -->
-            <div class="block bg-emerald-500 w-14 h-8 rounded-full"></div>
+            <div
+              class="
+                block
+                bg-blueGray-400
+                dark:bg-amber-500
+                w-14
+                h-8
+                rounded-full
+                transition-colors
+              "
+            ></div>
             <!-- dot -->
             <div
               class="
@@ -56,7 +75,15 @@
       </div>
       <a
         [href]="repoLink"
-        class="w-10 h-10 hover:bg-green-500 transition-colors rounded-full p-2"
+        class="
+          w-10
+          h-10
+          hover:bg-emerald-500
+          dark:hover:bg-amber-500
+          transition-colors
+          rounded-full
+          p-2
+        "
         target="_blank"
         rel="noopener noreferrer"
       >
