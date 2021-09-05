@@ -4,20 +4,31 @@
     rounded
     justify-between
     mb-4
-    bg-accent-400
+    bg-cyan-900
     p-4
     text-white
     shadow
   "
 >
   <div class="flex flex-row justify-center items-center gap-2">
-    <span class="rounded px-2 font-bold h-6 bg-accent-700">{{
+    <span class="rounded px-2 py-1 font-bold bg-cyan-700">{{
       (optionService.options$ | async)?.length
     }}</span>
     <span class="options-title">Options</span>
   </div>
   <button
-    class="option-btn"
+    class="
+      bg-gradient-to-br
+      from-emerald-400
+      to-emerald-600
+      px-3
+      py-1
+      rounded
+      shadow
+      opacity-90
+      hover:opacity-100
+      transition-opacity
+    "
     (click)="viewAllOptions()"
     *ngIf="optionService.hasInvisible()"
   >
@@ -26,34 +37,16 @@
   <div class="flex flex row justify-center items-center gap-2">
     <label>Remove Option after Spin</label>
     <input
-      class="
-        w-6
-        h-6
-        rounded
-        appearance-none
-        bg-accent-700
-        checked:bg-primary-200 checked:border-transparent
-        cursor-pointer
-      "
+      class="w-6 h-6 cursor-pointer rounded"
       type="checkbox"
       [(ngModel)]="optionService.removeOptions"
     />
   </div>
 </div>
 
-<div
-  class="
-    flex flex-wrap flex-row
-    gap-4
-    justify-center
-    bg-gray-50
-    rounded
-    p-4
-    shadow
-  "
->
+<div class="flex flex-wrap flex-row gap-4 justify-center p-4">
   <div
-    class="flex flex-row items-center bg-gray-100 p-3 rounded shadow"
+    class="flex flex-row items-center bg-opacity-20 bg-white p-3 rounded shadow"
     *ngFor="let option of optionService.options$ | async"
   >
     <input
@@ -69,20 +62,24 @@
         transition-all
         opacity-90
         hover:opacity-100
+        shadow
       "
       [(colorPicker)]="option.color"
       (colorPickerSelect)="optionChanged()"
     />
-    <div class="relative rounded h-8 shadow mx-2">
+    <div class="relative h-8 mx-2">
       <input
         class="
-          h-full
+          bg-cyan-50
+          appearance-none
+          border-2 border-cyan-50
+          rounded
+          w-full
           px-3
-          focus:ring-indigo-500 focus:border-indigo-500
-          block
-          sm:text-sm
-          border-gray-300
-          rounded-md
+          py-1
+          text-gray-700
+          leading-tight
+          focus:outline-none focus:border-cyan-800
         "
         [(ngModel)]="option.name"
         (change)="optionChanged()"
@@ -90,7 +87,7 @@
     </div>
     <button
       class="
-        bg-warn
+        bg-red-400
         rounded
         text-white
         w-8
@@ -99,6 +96,7 @@
         transition-opacity
         opacity-90
         hover:opacity-100
+        shadow
       "
       (click)="optionService.removeOption(option)"
     >
@@ -107,24 +105,44 @@
   </div>
 
   <form
-    class="flex flex-row items-center gap-2 bg-gray-200 p-3 rounded shadow"
+    class="
+      flex flex-row
+      items-center
+      gap-2
+      bg-white bg-opacity-30
+      p-3
+      rounded
+      shadow
+    "
     (submit)="
       $event.preventDefault();
       addOption(addOptionInput.value);
       addOptionInput.value = ''
     "
   >
-    <div class="relative rounded h-8 shadow">
+    <div class="relative h-8">
       <input
         #addOptionInput
-        class="bg-gray-100 h-full px-3 block sm:text-sm rounded-md"
+        class="
+          appearance-none
+          border-2 border-cyan-50
+          rounded
+          w-full
+          px-3
+          py-1
+          text-gray-700
+          leading-tight
+          focus:outline-none focus:border-cyan-900
+        "
         placeholder="New Option"
       />
     </div>
     <button
       type="submit"
       class="
-        bg-accent-200
+        bg-gradient-to-br
+        from-emerald-400
+        to-emerald-600
         rounded
         text-white
         w-8
@@ -133,6 +151,7 @@
         transition-opacity
         opacity-90
         hover:opacity-100
+        shadow
       "
       [disabled]="!addOptionInput.value"
     >

@@ -102,7 +102,7 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
         // text
         this.ctx.translate(this.rad, this.rad);
         this.ctx.rotate(ang + this.arc / 2);
-        this.ctx.font = '400 1.5em sans-serif';
+        this.ctx.font = '400 1.2em sans-serif';
         this.ctx.textAlign = 'right';
         this.ctx.fillStyle = this.getContrast(option.color);
         this.ctx.fillText(option.name, this.rad - 10, 10);

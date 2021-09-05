@@ -1,18 +1,38 @@
-<div class="flex flex-row justify-end items-center mt-2">
-  <small>
-    Made with ❤️ by
-    <a
-      class="
-        px-2
-        py-1
-        hover:bg-accent-200 hover:text-white
-        rounded
-        transition-colors
-      "
-      [href]="madeByLink"
-      target="_blank"
-      rel="noopener noreferrer"
-      >{{ madeByName }}</a
-    >
-  </small>
+<div class="bg-blueGray-900 text-white fixed bottom-0 left-0 w-full h-16">
+  <div
+    class="
+      flex flex-row
+      justify-end
+      items-center
+      container
+      mx-auto
+      py-3
+      px-5
+      h-full
+    "
+  >
+    <small>
+      Made with ❤️ by
+      <a
+        class="
+          px-2
+          py-1
+          bg-gradient-to-br
+          from-emerald-400
+          to-emerald-600
+          opacity-90
+          text-white
+          transition-opacity
+          hover:opacity-100
+          rounded
+          transition-colors
+          ml-1
+        "
+        [href]="madeByLink"
+        target="_blank"
+        rel="noopener noreferrer"
+        >{{ madeByName }}</a
+      >
+    </small>
+  </div>
 </div>
