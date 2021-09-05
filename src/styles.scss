@@ -1,21 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;900&display=swap");
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;900&display=swap');
 
 body {
   margin: 0;
-  font-family: "Lato", sans-serif;
   height: 100vh;
 }
 
 a {
   text-decoration: inherit;
   color: inherit;
-}
-
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-  box-sizing: border-box;
 }

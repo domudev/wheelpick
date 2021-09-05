@@ -81,7 +81,7 @@ export class OptionService {
     return this.options.findIndex((o) => !o.visible) !== -1;
   }
 
-  async makeAllVisible(): Promise<void>  {
+  async makeAllVisible(): Promise<void> {
     this.options = this.options.map((option) => {
       return { ...option, visible: true };
     });

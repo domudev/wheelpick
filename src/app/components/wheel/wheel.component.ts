@@ -38,7 +38,7 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
   private rad = 0;
   private tau = 0;
   private arc = 0;
-  private friction = 0.96; // 0.995=soft, 0.99=mid, 0.98=hard;
+  private friction = 0.98; // 0.995=soft, 0.99=mid, 0.98=hard;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
@@ -94,77 +94,23 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
         // option part color
         this.ctx.beginPath();
         this.ctx.fillStyle = option.color;
-        this.ctx.lineWidth = 10;
-        this.ctx.strokeStyle = '#fff';
         this.ctx.moveTo(this.rad, this.rad);
         this.ctx.arc(this.rad, this.rad, this.rad, ang, ang + this.arc);
         this.ctx.lineTo(this.rad, this.rad);
-        this.ctx.stroke();
         this.ctx.fill();
 
         // text
         this.ctx.translate(this.rad, this.rad);
         this.ctx.rotate(ang + this.arc / 2);
-        this.ctx.font = '900 16px monospace';
+        this.ctx.font = '400 1.2em sans-serif';
         this.ctx.textAlign = 'right';
         this.ctx.fillStyle = this.getContrast(option.color);
         this.ctx.fillText(option.name, this.rad - 10, 10);
 
         this.ctx.restore();
       });
-      this.rotate();
+      this.rotateUpdate();
     }
-  }
-
-  private getIndex(): number {
-    return (
-      Math.floor(
-        this.options.length - (this.angle / this.tau) * this.options.length
-      ) % this.options.length
-    );
-  }
-
-  private rotate(): void {
-    const option = this.options[this.getIndex()];
-    this.ctx.canvas.style.transform = `rotate(${this.angle - Math.PI / 2}rad)`;
-    this.spinButton.nativeElement.textContent = this.angleVelocity
-      ? option.name
-      : 'GO';
-    if (this.wheelSpun) {
-      this.spinButton.nativeElement.style.background = option?.color;
-      this.spinButton.nativeElement.style.color = this.getContrast(
-        option?.color
-      );
-    }
-    if (!this.angleVelocity && this.wheelSpun) {
-      this.currentOption = option;
-      this.confettiExplosion();
-    }
-  }
-
-  private randomVelocity(a: number, b: number): number {
-    return Math.random() * (b - a) + a;
-  }
-
-  private startEngine(): void {
-    const engine = () => {
-      const frame = () => {
-        if (!this.angleVelocity) {
-          return;
-        }
-        this.angleVelocity *= this.friction; // Decrement velocity by friction
-        if (this.angleVelocity < 0.002) {
-          this.angleVelocity = 0;  // Bring to stop
-        }
-        this.angle += this.angleVelocity; // Update angle
-        this.angle %= this.tau; // Normalize angle
-        this.rotate();
-      };
-      frame();
-      requestAnimationFrame(engine);
-    };
-
-    engine();
   }
 
   async spinWheel(): Promise<void> {
@@ -181,11 +127,78 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
       }
       this.currentOption = undefined;
       this.angleVelocity = this.randomVelocity(
-        this.wheelStrength - 0.2,
-        this.wheelStrength + 0.2
+        this.wheelStrength / 3,
+        this.wheelStrength * 3
       );
       this.wheelSpun = true;
     }
+  }
+
+  getContrast(hexColor?: string): string {
+    if (hexColor) {
+      const rgb = this.hexToRgb(hexColor);
+      if (rgb) {
+        // http://www.w3.org/TR/AERT#color-contrast
+        const brightness = Math.round(
+          (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000
+        );
+        return brightness > 125 ? '#000' : '#fff';
+      }
+    }
+    return '#fff';
+  }
+
+  private getIndex(): number {
+    return (
+      Math.floor(
+        this.options.length - (this.angle / this.tau) * this.options.length
+      ) % this.options.length
+    );
+  }
+
+  private rotateUpdate(): void {
+    const option = this.options[this.getIndex()];
+    this.ctx.canvas.style.transform = `rotate(${this.angle - Math.PI / 2}rad)`;
+    this.drawMotionBlur(this.angleVelocity * 100);
+    if (this.wheelSpun) {
+      this.spinButton.nativeElement.style.background = option?.color;
+      this.spinButton.nativeElement.style.color = this.getContrast(
+        option?.color
+      );
+    }
+    if (!this.angleVelocity && this.wheelSpun) {
+      this.currentOption = option;
+      this.confettiExplosion();
+    }
+  }
+
+  private drawMotionBlur(amount: number) {
+    this.ctx.filter = `blur(${Math.floor(amount)}px)`;
+  }
+
+  private randomVelocity(a: number, b: number): number {
+    return Math.random() * (b - a) + a;
+  }
+
+  private startEngine(): void {
+    const engine = () => {
+      const frame = () => {
+        if (!this.angleVelocity) {
+          return;
+        }
+        this.angleVelocity *= this.friction; // Decrement velocity by friction
+        if (this.angleVelocity < 0.002) {
+          this.angleVelocity = 0; // Bring to stop
+        }
+        this.angle += this.angleVelocity; // Update angle
+        this.angle %= this.tau; // Normalize angle
+        this.rotateUpdate();
+      };
+      frame();
+      requestAnimationFrame(engine);
+    };
+
+    engine();
   }
 
   private confettiExplosion(): void {
@@ -211,19 +224,5 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
           b: parseInt(result[3], 16),
         }
       : null;
-  }
-
-  getContrast(hexColor?: string): string {
-    if (hexColor) {
-      const rgb = this.hexToRgb(hexColor);
-      if (rgb) {
-        // http://www.w3.org/TR/AERT#color-contrast
-        const brightness = Math.round(
-          (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000
-        );
-        return brightness > 125 ? '#000' : '#fff';
-      }
-    }
-    return '#fff';
   }
 }
