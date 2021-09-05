@@ -61,8 +61,8 @@
       [style.backgroundColor]="option.color"
       class="
         rounded
-        w-6
-        h-6
+        w-8
+        h-8
         cursor-pointer
         m-0
         p-0
@@ -93,16 +93,16 @@
         bg-warn
         rounded
         text-white
-        material-icons
-        w-6
-        h-6
+        w-8
+        h-8
+        p-1
         transition-opacity
         opacity-90
         hover:opacity-100
       "
       (click)="optionService.removeOption(option)"
     >
-      close
+      <icon-trash></icon-trash>
     </button>
   </div>
 
@@ -127,16 +127,16 @@
         bg-accent-200
         rounded
         text-white
-        material-icons
-        w-6
-        h-6
+        w-8
+        h-8
+        p-1
         transition-opacity
         opacity-90
         hover:opacity-100
       "
       [disabled]="!addOptionInput.value"
     >
-      add
+      <icon-plus></icon-plus>
     </button>
   </form>
 </div>

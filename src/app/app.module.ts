@@ -12,6 +12,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ArrowComponent } from './components/icons/arrow/arrow.component';
 import { ChevronComponent } from './components/icons/chevron/chevron.component';
 import { DoubleChevronComponent } from './components/icons/double-chevron/double-chevron.component';
+import { PlusComponent } from './components/icons/plus/plus.component';
+import { MinusComponent } from './components/icons/minus/minus.component';
+import { TrashComponent } from './components/icons/trash/trash.component';
+import { CheckComponent } from './components/icons/check/check.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +26,10 @@ import { DoubleChevronComponent } from './components/icons/double-chevron/double
     ArrowComponent,
     ChevronComponent,
     DoubleChevronComponent,
+    PlusComponent,
+    MinusComponent,
+    TrashComponent,
+    CheckComponent,
   ],
   imports: [
     BrowserModule,
