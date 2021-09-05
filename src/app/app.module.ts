@@ -9,13 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ArrowComponent } from './components/icons/arrow/arrow.component';
-import { ChevronComponent } from './components/icons/chevron/chevron.component';
-import { DoubleChevronComponent } from './components/icons/double-chevron/double-chevron.component';
-import { PlusComponent } from './components/icons/plus/plus.component';
-import { MinusComponent } from './components/icons/minus/minus.component';
-import { TrashComponent } from './components/icons/trash/trash.component';
-import { CheckComponent } from './components/icons/check/check.component';
+import { IconsModule } from './icons/icons.module';
 
 @NgModule({
   declarations: [
@@ -23,13 +17,6 @@ import { CheckComponent } from './components/icons/check/check.component';
     WheelComponent,
     OptionComponent,
     FooterComponent,
-    ArrowComponent,
-    ChevronComponent,
-    DoubleChevronComponent,
-    PlusComponent,
-    MinusComponent,
-    TrashComponent,
-    CheckComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +25,7 @@ import { CheckComponent } from './components/icons/check/check.component';
       { path: '', component: AppComponent },
       { path: '**', redirectTo: '', pathMatch: 'full' },
     ]),
+    IconsModule,
     FlexLayoutModule,
     ColorPickerModule,
   ],

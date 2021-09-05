@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'icon-arrow',
+  selector: 'icon-plus',
   template: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,12 +13,12 @@ import { Component, OnInit } from '@angular/core';
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-width="2"
-        d="M8 7l4-4m0 0l4 4m-4-4v18"
+        d="M12 4v16m8-8H4"
       />
     </svg>
   `,
 })
-export class ArrowComponent implements OnInit {
+export class PlusIcon implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}

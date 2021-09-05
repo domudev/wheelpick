@@ -18,7 +18,7 @@ import { Component, OnInit } from '@angular/core';
     </svg>
   `,
 })
-export class ChevronComponent implements OnInit {
+export class ChevronIcon implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}

@@ -18,7 +18,7 @@ import { Component, OnInit } from '@angular/core';
     </svg>
   `,
 })
-export class MinusComponent implements OnInit {
+export class MinusIcon implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
