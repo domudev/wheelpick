@@ -48,6 +48,7 @@ export class OptionService {
       this.options.push(option);
       await this.storeOptions();
     } else {
+      // TODO: Add some notification for the user
       console.warn(`Max Options: ${this.maxOptions}`);
       this.options$.next(this.options);
     }
