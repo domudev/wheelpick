@@ -1,0 +1,19 @@
+<div class="flex flex-row gap-2">
+  <button
+    (click)="timerService.startTimer()"
+    *ngIf="!timerService.timerRunning"
+  >
+    start
+  </button>
+  <button (click)="timerService.pauseTimer()" *ngIf="timerService.timerRunning">
+    pause
+  </button>
+  <button
+    (click)="timerService.resetTimer()"
+    *ngIf="!timerService.timerRunning"
+  >
+    reset
+  </button>
+</div>
+
+{{ timerService.timerValue | async }}

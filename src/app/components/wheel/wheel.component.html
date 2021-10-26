@@ -41,7 +41,7 @@
     >
       <span>
         <span *ngIf="currentOption; else noOption">{{
-          currentOption.name
+          currentOption?.name
         }}</span>
         <ng-template #noOption>
           <span *ngIf="wheelSpun; else wheelReady">...</span>
@@ -95,7 +95,7 @@
         color: getContrast(currentOption.color)
       }"
     >
-      {{ currentOption.name }}
+      {{ currentOption?.name }}
     </div>
     <canvas
       #confettiCanvas
