@@ -37,29 +37,82 @@
   >
     Restart
   </button>
-  <div class="flex flex row justify-center items-center gap-2">
-    <label>Remove Option after Spin</label>
-    <input
-      class="
-        border-0
-        w-6
-        h-6
-        transition-opacity
-        opacity-90
-        cursor-pointer
-        rounded
-        bg-gradient-to-br
-        from-emerald-400
-        to-emerald-600
-        appearance-none
-        text-emerald-600
-        focus:outline-none focus:ring-offset-0 focus:ring-0
-        hover:opacity-100
-        dark:from-amber-400 dark:to-amber-600 dark:text-amber-500
-      "
-      type="checkbox"
-      [(ngModel)]="optionService.removeOptions"
-    />
+  <div class="flex flex-col gap-3">
+    <div class="flex flex row justify-end items-center gap-2">
+      <label>Remove Option after Spin</label>
+      <input
+        class="
+          border-0
+          w-6
+          h-6
+          transition-opacity
+          opacity-90
+          cursor-pointer
+          rounded
+          bg-gradient-to-br
+          from-emerald-400
+          to-emerald-600
+          appearance-none
+          text-emerald-600
+          focus:outline-none focus:ring-offset-0 focus:ring-0
+          hover:opacity-100
+          dark:from-amber-400 dark:to-amber-600 dark:text-amber-500
+        "
+        type="checkbox"
+        [(ngModel)]="optionService.removeOptions"
+      />
+    </div>
+    <div class="flex flex row justify-end items-center gap-2">
+      <label>Use Timer</label>
+      <input
+        class="
+          border-0
+          w-6
+          h-6
+          transition-opacity
+          opacity-90
+          cursor-pointer
+          rounded
+          bg-gradient-to-br
+          from-emerald-400
+          to-emerald-600
+          appearance-none
+          text-emerald-600
+          focus:outline-none focus:ring-offset-0 focus:ring-0
+          hover:opacity-100
+          dark:from-amber-400 dark:to-amber-600 dark:text-amber-500
+        "
+        type="checkbox"
+        [(ngModel)]="optionService.useTimer"
+      />
+      <div *ngIf="optionService.useTimer">
+        <input
+          class="
+            h-6
+            w-20
+            rounded
+            text-sm
+            appearance-none
+            dark:bg-blueGray-800 dark:text-white
+            rounded
+            border-2 border-transparent
+            dark:border-blueGray-800
+            px-2
+            py-1
+            text-gray-700
+            focus:outline-none
+            focus:border-cyan-600
+            focus:ring-offset-0
+            focus:ring-0
+            dark:focus:border-amber-600
+          "
+          type="number"
+          min="0"
+          [(ngModel)]="optionService.timerDuration"
+        />
+        <span class="ml-2">sec.</span>
+      </div>
+    </div>
   </div>
 </div>
 

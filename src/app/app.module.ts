@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { WheelComponent } from './components/wheel/wheel.component';
 import { OptionComponent } from './components/option/option.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { TimerComponent } from './components/timer/timer.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -17,6 +18,7 @@ import { IconsModule } from './icons/icons.module';
     WheelComponent,
     OptionComponent,
     FooterComponent,
+    TimerComponent,
   ],
   imports: [
     BrowserModule,

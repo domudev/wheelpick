@@ -9,6 +9,9 @@ import { TrashIcon } from './trash/trash.icon';
 import { CheckIcon } from './check/check.icon';
 import { SunIcon } from './sun/sun.icon';
 import { MoonIcon } from './moon/moon.icon';
+import { PlayIcon } from './play/play.icon';
+import { PauseIcon } from './pause/pause.icon';
+import { ResetIcon } from './reset/reset.icon';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,9 @@ import { MoonIcon } from './moon/moon.icon';
     CheckIcon,
     SunIcon,
     MoonIcon,
+    PlayIcon,
+    PauseIcon,
+    ResetIcon,
   ],
   exports: [
     ArrowIcon,
@@ -32,6 +38,9 @@ import { MoonIcon } from './moon/moon.icon';
     CheckIcon,
     SunIcon,
     MoonIcon,
+    PlayIcon,
+    PauseIcon,
+    ResetIcon,
   ],
 })
 export class IconsModule {}
