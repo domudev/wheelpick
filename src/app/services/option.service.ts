@@ -40,11 +40,11 @@ export class OptionService {
   }
   set timerDuration(duration: number) {
     this._timerDuration = duration;
-    this.$timerDuration.next(duration);
+    this.timerDuration$.next(duration);
     this.storeSettings();
   }
 
-  public readonly $timerDuration: Subject<number> = new Subject<number>();
+  readonly timerDuration$: Subject<number> = new Subject<number>();
 
   private maxOptions = 20;
   private _storageMode = StorageModeEnum.URL; // where to store the options

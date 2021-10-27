@@ -1,11 +1,12 @@
-<div class="flex flex-row gap-3 justify-center dark:text-white p-2 rounded">
+<div class="flex flex-row gap-3 justify-center dark:text-white p-2">
   <button
     (click)="timerService.startTimer()"
-    *ngIf="!timerService.timerRunning"
+    *ngIf="!timerService.timerRunning && timerService.currentSecondsLeft > 0"
   >
     <icon-play></icon-play>
   </button>
   <div
+    *ngIf="!timerDone; else timerDoneAlert"
     class="
       px-4
       py-2
@@ -18,8 +19,23 @@
       pointer-events-none
     "
   >
-    {{ timerService.timerValue | async }}
+    {{ timerService.timerValue$ | async }}
   </div>
+  <ng-template #timerDoneAlert>
+    <div
+      class="
+        px-4
+        py-2
+        bg-red-500
+        rounded
+        text-white
+        font-bold
+        pointer-events-none
+      "
+    >
+      Time's Up!
+    </div>
+  </ng-template>
   <button (click)="timerService.pauseTimer()" *ngIf="timerService.timerRunning">
     <icon-pause></icon-pause>
   </button>

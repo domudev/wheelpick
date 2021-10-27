@@ -10,16 +10,22 @@ export class TimerService {
     return this._timerRunning;
   }
 
+  get currentSecondsLeft(): number {
+    return this._currentSecondsLeft;
+  }
+
   private _currentSecondsLeft = this.optionService.timerDuration;
   private _timerRunning = false;
 
-  timerValue: BehaviorSubject<number> = new BehaviorSubject<number>(Infinity);
-  timerDone: Subject<void> = new Subject<void>();
+  readonly timerValue$: BehaviorSubject<number> = new BehaviorSubject<number>(
+    Infinity
+  );
+  readonly timerDone$: Subject<void> = new Subject<void>();
   timerInterval?: number;
 
   constructor(private optionService: OptionService) {
-    this.timerValue.next(this._currentSecondsLeft);
-    optionService.$timerDuration.subscribe((duration) => {
+    this.timerValue$.next(this._currentSecondsLeft);
+    optionService.timerDuration$.subscribe((duration) => {
       this.resetTimer();
       this._currentSecondsLeft = duration;
     });
@@ -29,10 +35,11 @@ export class TimerService {
     this._timerRunning = true;
     this.timerInterval = window.setInterval(() => {
       this._currentSecondsLeft--;
-      this.timerValue.next(this._currentSecondsLeft);
-      if (this._currentSecondsLeft === 0) {
+      this.timerValue$.next(this._currentSecondsLeft);
+      if (this._currentSecondsLeft <= 0) {
+        this._currentSecondsLeft = 0;
         this.pauseTimer();
-        this.timerDone.next();
+        this.timerDone$.next();
       }
     }, 1000);
   }
@@ -45,6 +52,6 @@ export class TimerService {
   resetTimer() {
     this.pauseTimer();
     this._currentSecondsLeft = this.optionService.timerDuration;
-    this.timerValue.next(this.optionService.timerDuration);
+    this.timerValue$.next(this.optionService.timerDuration);
   }
 }

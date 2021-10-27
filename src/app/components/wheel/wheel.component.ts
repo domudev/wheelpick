@@ -119,7 +119,7 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
 
   async spinWheel(): Promise<void> {
     if (!this.angleVelocity) {
-      this.timerService.startTimer();
+      this.timerService.resetTimer();
       // remove option before next turn
       if (this.currentOption && this.opionService.removeOptions) {
         await this.opionService.updateOption(this.currentOption.id, {
@@ -178,6 +178,7 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
 
   private wheelHasStopped(option: Option) {
     this.currentOption = option;
+    this.timerService.startTimer();
     this.confettiExplosion();
   }
 
