@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 import { StorageModeEnum } from '../shared/enum/storage-mode.enum';
 import { Option } from '../shared/interface/option';
@@ -27,9 +27,30 @@ export class OptionService {
     this.storeSettings();
   }
 
+  get useTimer(): boolean {
+    return this._useTimer;
+  }
+  set useTimer(useTimer: boolean) {
+    this._useTimer = useTimer;
+    this.storeSettings();
+  }
+
+  get timerDuration(): number {
+    return this._timerDuration;
+  }
+  set timerDuration(duration: number) {
+    this._timerDuration = duration;
+    this.timerDuration$.next(duration);
+    this.storeSettings();
+  }
+
+  readonly timerDuration$: Subject<number> = new Subject<number>();
+
   private maxOptions = 20;
   private _storageMode = StorageModeEnum.URL; // where to store the options
   private _removeOptions = false; // whether options shall be removed from wheel after selection
+  private _useTimer = false; // whether a timer shall be started when an option is selected
+  private _timerDuration = 60; // the duration for the timer to count down in sec
 
   constructor(
     private readonly router: Router,
@@ -106,13 +127,17 @@ export class OptionService {
   }
 
   private async storeSettings(): Promise<void> {
+    const settings = {
+      removeOptions: this.removeOptions,
+      useTimer: this.useTimer,
+      timerDuration: this.timerDuration,
+    };
+
     if (this._storageMode === StorageModeEnum.URL) {
       await this.router.navigate([], {
         relativeTo: this.activatedRoute,
         queryParams: {
-          settings: JSON.stringify({
-            removeOptions: this.removeOptions,
-          }),
+          settings: JSON.stringify(settings),
         },
         queryParamsHandling: 'merge',
       });
@@ -120,12 +145,7 @@ export class OptionService {
         console.warn(`URL Length > 2048: ${location.href.length}`);
       }
     } else {
-      localStorage.setItem(
-        'settings',
-        JSON.stringify({
-          removeOptions: this.removeOptions,
-        })
-      );
+      localStorage.setItem('settings', JSON.stringify(settings));
     }
   }
 
@@ -149,8 +169,10 @@ export class OptionService {
 
           if (params.settings) {
             try {
-              this.removeOptions =
-                JSON.parse(params.settings).removeOptions || false;
+              const parsedSettings = JSON.parse(params.settings);
+              this.removeOptions = parsedSettings?.removeOptions || false;
+              this.useTimer = parsedSettings?.useTimer || false;
+              this.timerDuration = parsedSettings?.timerDuration || 60;
             } catch (err) {
               console.warn(`URL Options parsing error: ${err.message}`);
             }
@@ -172,7 +194,10 @@ export class OptionService {
     }
     if (settings) {
       try {
-        this.removeOptions = JSON.parse(settings).removeOptions || false;
+        const parsedSettings = JSON.parse(settings);
+        this.removeOptions = parsedSettings?.removeOptions || false;
+        this.useTimer = parsedSettings?.useTimer || false;
+        this.timerDuration = parsedSettings?.timerDuration || 60;
       } catch (err) {
         console.warn(`URL Options parsing error: ${err.message}`);
       }
