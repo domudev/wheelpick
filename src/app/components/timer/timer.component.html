@@ -1,19 +1,32 @@
-<div class="flex flex-row gap-2">
+<div class="flex flex-row gap-3 justify-center dark:text-white p-2 rounded">
   <button
     (click)="timerService.startTimer()"
     *ngIf="!timerService.timerRunning"
   >
-    start
+    <icon-play></icon-play>
   </button>
+  <div
+    class="
+      px-4
+      py-2
+      bg-cyan-500
+      dark:bg-blueGray-700
+      rounded
+      text-black
+      dark:text-white
+      font-bold
+      pointer-events-none
+    "
+  >
+    {{ timerService.timerValue | async }}
+  </div>
   <button (click)="timerService.pauseTimer()" *ngIf="timerService.timerRunning">
-    pause
+    <icon-pause></icon-pause>
   </button>
   <button
     (click)="timerService.resetTimer()"
     *ngIf="!timerService.timerRunning"
   >
-    reset
+    <icon-reset></icon-reset>
   </button>
 </div>
-
-{{ timerService.timerValue | async }}

@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { OptionService } from '../../services/option.service';
 import * as confetti from 'canvas-confetti';
 import { Option } from '../../shared/interface/option';
+import { TimerService } from '../../services/timer.service';
 
 @Component({
   selector: 'app-wheel',
@@ -49,7 +50,10 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
     }, 150);
   }
 
-  constructor(private opionService: OptionService) {}
+  constructor(
+    private opionService: OptionService,
+    private timerService: TimerService
+  ) {}
 
   ngAfterViewInit(): void {
     this.startEngine();
@@ -115,6 +119,7 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
 
   async spinWheel(): Promise<void> {
     if (!this.angleVelocity) {
+      this.timerService.startTimer();
       // remove option before next turn
       if (this.currentOption && this.opionService.removeOptions) {
         await this.opionService.updateOption(this.currentOption.id, {
@@ -165,10 +170,15 @@ export class WheelComponent implements AfterViewInit, OnDestroy {
         option?.color
       );
     }
+    //
     if (!this.angleVelocity && this.wheelSpun) {
-      this.currentOption = option;
-      this.confettiExplosion();
+      this.wheelHasStopped(option);
     }
+  }
+
+  private wheelHasStopped(option: Option) {
+    this.currentOption = option;
+    this.confettiExplosion();
   }
 
   private randomVelocity(a: number, b: number): number {

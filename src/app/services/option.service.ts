@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 import { StorageModeEnum } from '../shared/enum/storage-mode.enum';
 import { Option } from '../shared/interface/option';
@@ -40,8 +40,11 @@ export class OptionService {
   }
   set timerDuration(duration: number) {
     this._timerDuration = duration;
+    this.$timerDuration.next(duration);
     this.storeSettings();
   }
+
+  public readonly $timerDuration: Subject<number> = new Subject<number>();
 
   private maxOptions = 20;
   private _storageMode = StorageModeEnum.URL; // where to store the options
